@@ -1,23 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
-
-# Test Dependencies
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        703bd9caab50b139428cea1aaff9974ebee5742e # release-1.10.0
-)
-FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        de6fe184a9ac1a06895cdd1c9b437f0a0bdf14ad # v2.13.4
-)
-FetchContent_MakeAvailable(googletest Catch2)
-
-project(Test_Calc)
-set(SOURCES Test.cpp)
-
-
+cmake_minimum_required(VERSION 3.14)
 
 # Project
 project(Test_Calc)
@@ -38,10 +19,15 @@ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
-# Options
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -fsanitize=address")
+# Test Dependencies
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 # Link runTests with what we want to test and the GTest and pthread library
 add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${SOURCES})
@@ -51,4 +37,6 @@ target_link_libraries(
     GTest::gtest_main 
     Threads::Threads
 )
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME})
 

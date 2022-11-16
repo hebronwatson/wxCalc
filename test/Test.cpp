@@ -1,13 +1,11 @@
 #include <gtest/gtest.h>
 #include <wx/gdicmn.h>
-#include "../Calc.cpp"
+#include "../src/SpaceFactory.cpp"
 
-TEST(RUN_TEST_SUITE, SIMPLE_TEST){
-
-    Examples::Frame frame{};
-    wxPoint point{frame.buttonPosition({0,0})};
-    wxPoint point2{0,0};
-    ASSERT_EQ(point, point2);
+TEST(RUN_TEST_SUITE, CLASS_CONSTRUCTION_TEST){
+    ScreenSpace* screenSpace = SpaceFactory::DisplayScreen();
+    ASSERT_EQ(screenSpace, nullptr);
+    delete screenSpace;
 }
 
 int main(int argc, char** argv){
