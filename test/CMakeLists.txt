@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # Project
 project(Test_Calc)
-set(SOURCES Test.cpp)
+set(SOURCES Test.cpp "../src/op/Calculate.cpp")
 
 # WxWidget
 find_package(wxWidgets 3.1.4 REQUIRED)
@@ -11,7 +11,7 @@ include(${wxWidgets_USE_FILE})
 # Options
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -fsanitize=address")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wshadow -Wpedantic -Wconversion -Werror -fsanitize=address")
 enable_testing()
 
 # PThread
@@ -31,6 +31,7 @@ FetchContent_MakeAvailable(googletest)
 
 # Link runTests with what we want to test and the GTest and pthread library
 add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC "../src")
 target_link_libraries(
     ${PROJECT_NAME} 
     ${wxWidgets_LIBRARIES} 
