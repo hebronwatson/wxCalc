@@ -1,3 +1,5 @@
+#pragma once
+
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/frame.h>
@@ -6,7 +8,7 @@
 #include <wx/textctrl.h>
 #include <wx/gdicmn.h>
 #include <wx/string.h>
-#include <equals.h>
+#include "../testutils/equals.h"
 
 struct ScreenSpace {
     wxPoint location;
